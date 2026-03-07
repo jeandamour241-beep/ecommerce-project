@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: ["https://ecommerce-users-8fag1yapu-tuyisenges-projects.vercel.app", "https://ecommerce-admin-rho-three.vercel.app"],
+    origin: ["https://ecommerce-projectv3-ou3bsmdp2-tuyisenges-projects.vercel.app", "https://ecommerce-admin-rho-three.vercel.app"],
     credentials: true,
   }),
 );
