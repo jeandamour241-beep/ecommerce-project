@@ -2,14 +2,16 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useCart } from "../context/useCart";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const [cart, setCart] = useState(null);
   const [loading, setLoading] = useState(true);
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const { clearCart } = useCart();
-
+  const navigate = useNavigate();
   const handleCheckout = async () => {
+
     try {
       setCheckoutLoading(true);
 
@@ -27,7 +29,7 @@ const Cart = () => {
         setCart(null);
 
         // Redirect to orders page (optional)
-        window.location.href = "/orders";
+        navigate("/orders");
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "Checkout failed");
