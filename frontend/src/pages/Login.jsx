@@ -16,7 +16,7 @@ const Register = () => {
     try {
       if (state === false) {
         const response = await axios.post(
-          "http://localhost:9090/auth/register",
+          "https://ecommerce-project-1z7p.onrender.com/auth/register",
           { name, email, password },
         );
         if (response.data.success) {
@@ -28,7 +28,7 @@ const Register = () => {
 
         toast.success(response.data.message);
       } else {
-        const response = await axios.post("http://localhost:9090/auth/login", {
+        const response = await axios.post("https://ecommerce-project-1z7p.onrender.com/auth/login", {
           email,
           password,
         });

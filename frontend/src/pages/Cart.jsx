@@ -14,7 +14,7 @@ const Cart = () => {
       setCheckoutLoading(true);
 
       const res = await axios.post(
-        "http://localhost:9090/order/add",
+        "https://ecommerce-project-1z7p.onrender.com/order/add",
         {},
         { withCredentials: true },
       );
@@ -40,7 +40,7 @@ const Cart = () => {
   useEffect(() => {
     const loadCart = async () => {
       try {
-        const res = await axios.get("http://localhost:9090/cart/getCart", {
+        const res = await axios.get("https://ecommerce-project-1z7p.onrender.com/cart/getCart", {
           withCredentials: true,
         });
 
@@ -63,7 +63,7 @@ const Cart = () => {
 
     try {
       await axios.put(
-        "http://localhost:9090/cart/update",
+        "https://ecommerce-project-1z7p.onrender.com/cart/update",
         { itemId, quantity: newQty },
         { withCredentials: true },
       );
@@ -83,7 +83,7 @@ const Cart = () => {
   // ✅ Remove item (Optimistic Update)
   const removeItem = async (itemId) => {
     try {
-      await axios.delete(`http://localhost:9090/cart/delete/${itemId}`, {
+      await axios.delete(`https://ecommerce-project-1z7p.onrender.com/cart/delete/${itemId}`, {
         withCredentials: true,
       });
 

@@ -28,7 +28,7 @@ const Navbar = () => {
       try {
 
         const res = await axios.post(
-          "http://localhost:9090/auth/is-auth"
+          "https://ecommerce-project-1z7p.onrender.com/auth/is-auth"
         );
 
         if (res.data.success) {
@@ -46,7 +46,7 @@ const Navbar = () => {
       try {
 
         const res = await axios.get(
-          "http://localhost:9090/data"
+          "https://ecommerce-project-1z7p.onrender.com/data"
         );
 
         if (res.data.success) {
@@ -77,7 +77,7 @@ const Navbar = () => {
     try {
 
       const res = await axios.get(
-        `http://localhost:9090/product/find?search=${value}`
+        `https://ecommerce-project-1z7p.onrender.com/product/find?search=${value}`
       );
 
       if (res.data.success) {
@@ -106,7 +106,7 @@ const Navbar = () => {
     try {
 
       const res = await axios.post(
-        "http://localhost:9090/auth/logout/user"
+        "https://ecommerce-project-1z7p.onrender.com/auth/logout/user"
       );
 
       if (res.data.success) {

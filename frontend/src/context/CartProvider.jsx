@@ -9,7 +9,7 @@ const CartProvider = ({ children }) => {
     const loadCart = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:9090/cart/getCart",
+          "https://ecommerce-project-1z7p.onrender.com/cart/getCart",
           { withCredentials: true }
         );
 
@@ -27,7 +27,7 @@ const CartProvider = ({ children }) => {
   const fetchCart = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:9090/cart/getCart",
+        "https://ecommerce-project-1z7p.onrender.com/cart/getCart",
         { withCredentials: true }
       );
 

@@ -10,7 +10,7 @@ const AllProductCard = () => {
     const fetchProducts = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:9090/product/get",
+          "https://ecommerce-project-1z7p.onrender.com/product/get",
         );
 
         if (res.data.success) {

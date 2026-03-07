@@ -22,7 +22,7 @@ function SideNavbar() {
     axios.defaults.withCredentials=true;
 
     try {
-      const res = await axios.post('http://localhost:9090/auth/logout/admin');
+      const res = await axios.post('https://ecommerce-project-1z7p.onrender.com/auth/logout/admin');
       if (res.data.success) {
         toast.success(res.data.message);
         navigate('/')

@@ -18,7 +18,7 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(`http://localhost:9090/product/get/${id}`);
+        const res = await axios.get(`https://ecommerce-project-1z7p.onrender.com/product/get/${id}`);
 
         if (res.data.success) {
           setProduct(res.data.data);
@@ -36,7 +36,7 @@ const ProductDetail = () => {
   const addToCart = async (productId) => {
     try {
       const res = await axios.post(
-        "http://localhost:9090/cart/addToCart",
+        "https://ecommerce-project-1z7p.onrender.com/cart/addToCart",
         {
           productId,
           quantity,

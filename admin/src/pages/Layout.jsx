@@ -12,7 +12,7 @@ const Layout = () => {
 
       try {
         const res = await axios.post(
-          "http://localhost:9090/auth/is-admin-auth"
+          "https://ecommerce-project-1z7p.onrender.com/auth/is-admin-auth"
         );
 
         if (res.data.success) {

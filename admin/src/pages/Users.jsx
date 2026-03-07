@@ -11,7 +11,7 @@ const Users = () => {
       axios.defaults.withCredentials=true;
       try {
         
-        const res = await axios.get('http://localhost:9090/auth/users', {});
+        const res = await axios.get('https://ecommerce-project-1z7p.onrender.com/auth/users', {});
         if (res.data.success) {
           setUsers(res.data.users);
         }

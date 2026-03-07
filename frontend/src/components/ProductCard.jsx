@@ -10,7 +10,7 @@ const ProductCard = () => {
     const fetchProducts = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:9090/product/new?limit=8"
+          "https://ecommerce-project-1z7p.onrender.com/product/new?limit=8"
         );
 
         if (res.data.success) {

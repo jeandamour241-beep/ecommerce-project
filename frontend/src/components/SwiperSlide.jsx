@@ -15,7 +15,7 @@ const HeroSwiper = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get("http://localhost:9090/product/swiper");
+        const res = await axios.get("https://ecommerce-project-1z7p.onrender.com/product/swiper");
         console.log(res.data.product);
 
         if (res.data.success) {

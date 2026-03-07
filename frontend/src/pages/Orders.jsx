@@ -10,7 +10,7 @@ const Orders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const res = await axios.get("http://localhost:9090/order/getOrder", {
+        const res = await axios.get("https://ecommerce-project-1z7p.onrender.com/order/getOrder", {
           withCredentials: true,
         });
 
@@ -26,7 +26,7 @@ const Orders = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:9090/order/delete/${id}`, {
+      await axios.delete(`https://ecommerce-project-1z7p.onrender.com/order/delete/${id}`, {
         withCredentials: true,
       });
 
