@@ -65,7 +65,7 @@ export const userLogout = async (req, res) => {
     res.clearCookie("usersToken", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "lax"
+      sameSite: "none"
     });
 
     return res.status(200).json({
@@ -149,7 +149,7 @@ export const adminLogout = async (req, res) => {
     res.clearCookie("adminToken", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "lax"
+      sameSite: "none"
     });
 
     return res.status(200).json({
