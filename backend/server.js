@@ -34,3 +34,7 @@ app.use("/product", productRouter);
 app.use("/cart", cartRouter);
 app.use("/order", orderRouter);
 app.use(getRouter);
+
+app.get("/", (req, res) => {
+  res.status(200).send("Backend is running 🚀");
+});
