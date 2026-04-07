@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:5174"],
+    origin: ["https://ecommerce-adminpanel-seven.vercel.app", "https://ecommerce-pl3o3g6us-tuyisenges-projects.vercel.app"],
     credentials: true,
   }),
 );
