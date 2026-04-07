@@ -19,7 +19,7 @@ function UploadProduct() {
       formData.append("image", image);
 
       const res = await axios.post(
-        "http://localhost:9090/product/add",
+        "https://ecommerce-project-mtyu.onrender.com/product/add",
         formData,
         {
           withCredentials: true,

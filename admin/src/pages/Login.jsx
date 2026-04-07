@@ -17,7 +17,7 @@ const AdminLogin = () => {
     try {
 
       const res = await axios.post(
-        "http://localhost:9090/auth/admin",
+        "https://ecommerce-project-mtyu.onrender.com/auth/admin",
         {
           email,
           password
