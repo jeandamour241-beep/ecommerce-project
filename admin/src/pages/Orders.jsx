@@ -11,7 +11,7 @@ const AdminOrders = () => {
       try {
 
         const res = await axios.get(
-          "https://ecommerce-project-1z7p.onrender.com/order/all",
+          "http://localhost:9090/order/all",
           { withCredentials: true }
         );
 
@@ -31,7 +31,7 @@ const AdminOrders = () => {
     try {
 
       await axios.put(
-        `https://ecommerce-project-1z7p.onrender.com/order/status/${id}`,
+        `http://localhost:9090/order/status/${id}`,
         { status: "approved" },
         { withCredentials: true }
       );

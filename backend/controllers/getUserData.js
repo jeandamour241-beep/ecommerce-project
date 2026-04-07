@@ -1,12 +1,10 @@
-import db from "../models/index.js";
-
-const {User} = db;
+import {prisma} from '../config/db.js';
 
 export const getUserData = async (req, res) => {
   try {
     const userId = req.user.id;
     
-    const data = await User.findOne({where: {id: userId}});
+    const data = await prisma.user.findFirst({where: {id: userId}});
 
     if (!data) {
       return res.json({ success: false, message: "User not found" });

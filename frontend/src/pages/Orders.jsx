@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { url } from "../components/url";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -10,7 +11,7 @@ const Orders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const res = await axios.get("https://ecommerce-project-1z7p.onrender.com/order/getOrder", {
+        const res = await axios.get(`${url}/order/getOrder`, {
           withCredentials: true,
         });
 
@@ -26,7 +27,7 @@ const Orders = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://ecommerce-project-1z7p.onrender.com/order/delete/${id}`, {
+      await axios.delete(`${url}/order/delete/${id}`, {
         withCredentials: true,
       });
 

@@ -4,6 +4,7 @@ import axios from "axios";
 import QuantitySelector from "../components/QuantitySelector";
 import { toast } from "react-toastify";
 import { useCart } from "../context/useCart";
+import { url } from "../components/url";
 
 
 
@@ -18,7 +19,7 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(`https://ecommerce-project-1z7p.onrender.com/product/get/${id}`);
+        const res = await axios.get(`${url}/product/get/${id}`);
 
         if (res.data.success) {
           setProduct(res.data.data);
@@ -36,7 +37,7 @@ const ProductDetail = () => {
   const addToCart = async (productId) => {
     try {
       const res = await axios.post(
-        "https://ecommerce-project-1z7p.onrender.com/cart/addToCart",
+        `${url}/cart/addToCart`,
         {
           productId,
           quantity,

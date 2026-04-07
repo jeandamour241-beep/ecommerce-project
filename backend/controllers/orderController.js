@@ -1,57 +1,47 @@
-import db from "../models/index.js";
-
-const { Cart, CartItem, Order, OrderItem, Product, User } = db;
+import { prisma } from "../config/db.js";
 
 export const createOrder = async (req, res) => {
-  const transaction = await db.sequelize.transaction();
-
   try {
     const userId = req.user.id;
 
-    const existingCart = await Cart.findOne({
-      where: { userId },
-      include: [{ model: CartItem, as: "cartItems" }],
-      transaction,
-    });
-
-    if (!existingCart || existingCart.cartItems.length === 0) {
-      await transaction.rollback();
-      return res.status(400).json({
-        success: false,
-        message: "Cart is empty",
-      });
-    }
-
-    const order = await Order.create(
-      { userId },
-      { transaction }
-    );
-
-    for (const item of existingCart.cartItems) {
-      await OrderItem.create(
-        {
-          orderId: order.id,
-          productId: item.productId,
-          quantity: item.quantity,
-          price: item.price * item.quantity,
+    const result = await prisma.$transaction(async (tx) => {
+      const existingCart = await tx.cart.findFirst({
+        where: { userId },
+        include: {
+          cartItems: true,
         },
-        { transaction }
-      );
-    }
+      });
 
-    await CartItem.destroy({
-      where: { cartId: existingCart.id },
-      transaction,
+      if (!existingCart || existingCart.cartItems.length === 0) {
+        throw new Error("Cart is empty");
+      }
+
+      const order = await tx.order.create({ data: { userId } });
+
+      for (const item of existingCart.cartItems) {
+        await tx.orderItem.create({
+          data: {
+            orderId: order.id,
+            productId: item.productId,
+            quantity: item.quantity,
+            price: item.price * item.quantity,
+          },
+        });
+      }
+
+      await tx.cartItem.deleteMany({
+        where: { cartId: existingCart.id },
+      });
+
+      return order;
     });
 
-    await transaction.commit();
-
-    return res.status(200).json({
+    return res.json({
       success: true,
       message: "Order created successfully",
+      data: result,
     });
   } catch (error) {
-    await transaction.rollback();
     return res.status(500).json({
       success: false,
       message: error.message,
@@ -63,21 +53,18 @@ export const getOrders = async (req, res) => {
   try {
     const userId = req.user.id;
 
-    const orders = await Order.findAll({
-      where: { userId },
-      include: [
-        {
-          model: OrderItem,
-          as: "orderItems",
-          include: [
-            {
-              model: Product,
-              as: "product",
-            },
-          ],
+    const orders = await prisma.order.findMany({
+      where: { userId: userId },
+      include: {
+        orderItems: {
+          include: {
+            product: true,
+          },
         },
-      ],
-      order: [["createdAt", "DESC"]],
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     return res.status(200).json({
@@ -97,7 +84,7 @@ export const deleteOrder = async (req, res) => {
     const userId = req.user.id;
     const { id } = req.params;
 
-    const order = await Order.findOne({
+    const order = await prisma.order.findUnique({
       where: { id, userId },
     });
 
@@ -108,8 +95,8 @@ export const deleteOrder = async (req, res) => {
       });
     }
 
-    await OrderItem.destroy({ where: { orderId: id } });
-    await order.destroy();
+    await prisma.orderItem.deleteMany({ where: { orderId: id } });
+    await prisma.order.delete({ where: { id: id } });
 
     return res.status(200).json({
       success: true,
@@ -125,33 +112,30 @@ export const deleteOrder = async (req, res) => {
 
 export const getAllOrders = async (req, res) => {
   try {
-
-    const orders = await Order.findAll({
-      include: [
-        {
-          model: User,
-          as: "user",
-          attributes: ["id", "name", "email"]
+    const orders = await prisma.order.findMany({
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
         },
-        {
-          model: OrderItem,
-          as: "orderItems",
-          include: [
-            {
-              model: Product,
-              as: "product",
-            },
-          ],
+        orderItems: {
+          include: {
+            product: true,
+          },
         },
-      ],
-      order: [["createdAt", "DESC"]],
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     return res.status(200).json({
       success: true,
       orders,
     });
-
   } catch (error) {
     return res.status(500).json({
       success: false,
@@ -162,11 +146,10 @@ export const getAllOrders = async (req, res) => {
 
 export const updateOrderStatus = async (req, res) => {
   try {
-
     const { id } = req.params;
     const { status } = req.body;
 
-    const order = await Order.findByPk(id);
+    const order = await prisma.order.findUnique({ where: { id: id } });
 
     if (!order) {
       return res.status(404).json({
@@ -175,14 +158,17 @@ export const updateOrderStatus = async (req, res) => {
       });
     }
 
-    order.status = status;
-    await order.save();
+    await prisma.order.update({
+      where: { id },
+      data: {
+        status: status,
+      },
+    });
 
     return res.status(200).json({
       success: true,
       message: "Order status updated",
     });
-
   } catch (error) {
     return res.status(500).json({
       success: false,

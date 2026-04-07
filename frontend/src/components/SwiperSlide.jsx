@@ -7,6 +7,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 import { useNavigate } from "react-router-dom";
+import { url } from "./url";
 
 const HeroSwiper = () => {
   const [products, setProducts] = useState([]);
@@ -15,7 +16,7 @@ const HeroSwiper = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get("https://ecommerce-project-1z7p.onrender.com/product/swiper");
+        const res = await axios.get(`${url}/product/swiper`);
         console.log(res.data.product);
 
         if (res.data.success) {

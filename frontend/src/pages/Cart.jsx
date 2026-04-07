@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useCart } from "../context/useCart";
 import { useNavigate } from "react-router-dom";
+import { url } from "../components/url";
 
 const Cart = () => {
   const [cart, setCart] = useState(null);
@@ -16,7 +17,7 @@ const Cart = () => {
       setCheckoutLoading(true);
 
       const res = await axios.post(
-        "https://ecommerce-project-1z7p.onrender.com/order/add",
+        `${url}/order/add`,
         {},
         { withCredentials: true },
       );
@@ -38,11 +39,10 @@ const Cart = () => {
     }
   };
 
-  // ✅ Load cart once (React 19 safe)
   useEffect(() => {
     const loadCart = async () => {
       try {
-        const res = await axios.get("https://ecommerce-project-1z7p.onrender.com/cart/getCart", {
+        const res = await axios.get(`${url}/cart/getCart`, {
           withCredentials: true,
         });
 
@@ -65,7 +65,7 @@ const Cart = () => {
 
     try {
       await axios.put(
-        "https://ecommerce-project-1z7p.onrender.com/cart/update",
+        `${url}/cart/update`,
         { itemId, quantity: newQty },
         { withCredentials: true },
       );
@@ -82,10 +82,9 @@ const Cart = () => {
     }
   };
 
-  // ✅ Remove item (Optimistic Update)
   const removeItem = async (itemId) => {
     try {
-      await axios.delete(`https://ecommerce-project-1z7p.onrender.com/cart/delete/${itemId}`, {
+      await axios.delete(`${url}/cart/delete/${itemId}`, {
         withCredentials: true,
       });
 
@@ -100,7 +99,6 @@ const Cart = () => {
     }
   };
 
-  // ✅ Loading state
   if (loading) {
     return (
       <div className="text-center py-20 text-gray-500 text-xl">
@@ -109,7 +107,6 @@ const Cart = () => {
     );
   }
 
-  // ✅ Empty cart
   if (!cart || !cart.cartItems?.length) {
     return (
       <div className="text-center py-20 text-gray-500 text-xl">

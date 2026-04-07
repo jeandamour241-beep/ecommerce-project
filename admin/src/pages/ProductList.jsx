@@ -10,7 +10,7 @@ const ProductList = () => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const res = await axios.get("https://ecommerce-project-1z7p.onrender.com/product/get", {
+        const res = await axios.get("http://localhost:9090/product/get", {
           withCredentials: true,
         });
 
@@ -31,7 +31,7 @@ const ProductList = () => {
   const Delete = async (id) => {
     try {
       const res = await axios.post(
-        "https://ecommerce-project-1z7p.onrender.com/product/delete",
+        "http://localhost:9090/product/delete",
         { id },
         { withCredentials: true },
       );

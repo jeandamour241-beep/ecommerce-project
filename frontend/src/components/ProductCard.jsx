@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { url } from "./url";
 
 const ProductCard = () => {
   const [products, setProducts] = useState([]);
@@ -10,7 +11,7 @@ const ProductCard = () => {
     const fetchProducts = async () => {
       try {
         const res = await axios.get(
-          "https://ecommerce-project-1z7p.onrender.com/product/new?limit=8"
+          `${url}/product/new?limit=8`
         );
 
         if (res.data.success) {
@@ -79,7 +80,7 @@ const ProductCard = () => {
                   )}
                 </div>
 
-                <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition">
+                <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition hidden sm:block">
                   Add
                 </button>
               </div>

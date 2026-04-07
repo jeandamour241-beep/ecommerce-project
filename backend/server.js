@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
-import db from "./config/dbConnection.js";
+import {connectDB} from "./config/db.js";
 import authRouter from "./routers/authRouter.js";
 import productRouter from "./routers/productRouter.js";
 import "dotenv/config";
@@ -17,15 +17,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: ["https://onlineshop-git-main-tuyisenges-projects.vercel.app", "https://onlineshop-adminpanal.vercel.app"],
+    origin: ["http://localhost:5173", "http://localhost:5174"],
     credentials: true,
   }),
 );
 app.use(cookieParser());
 
-db.sync()
-  .then(() => console.log("database connect successfully"))
-  .catch((err) => console.log(err.message));
+connectDB();
 
 app.listen(port, () => console.log(`server running on ${port}`));
 

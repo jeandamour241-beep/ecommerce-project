@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { url } from "../components/url";
 
 const Register = () => {
   const [state, setState] = useState(false);
@@ -16,7 +17,7 @@ const Register = () => {
     try {
       if (state === false) {
         const response = await axios.post(
-          "https://ecommerce-project-1z7p.onrender.com/auth/register",
+          `${url}/auth/register`,
           { name, email, password },
         );
         if (response.data.success) {
@@ -28,7 +29,7 @@ const Register = () => {
 
         toast.success(response.data.message);
       } else {
-        const response = await axios.post("https://ecommerce-project-1z7p.onrender.com/auth/login", {
+        const response = await axios.post(`${url}/auth/login`, {
           email,
           password,
         });
